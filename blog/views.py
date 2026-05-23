@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import viewsets, generics
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.response import Response
 # Create your views here.
@@ -22,14 +22,14 @@ class RegisterView(generics.CreateAPIView):
     
     
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all().order_by('created_at')
+    queryset = Category.objects.all().order_by('-created_at')
     serializer_class = CategorySerializer
     
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
             return [AllowAny()]
         
-        return [IsAuthenticated()]
+        return [IsAdminUser()]
     
     
 class PostViewSet(viewsets.ModelViewSet):
