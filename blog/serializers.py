@@ -8,7 +8,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=6)
     
     class Meta:
-        models = User
+        model = User
         fields = ['id', 'username', 'password']
         
     def create(self, validated_data):
@@ -21,7 +21,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        models = Category
+        model = Category
         fields = ['id', 'name', 'description', 'created_at']
         read_only_fields = ['id', 'created_at']
         
@@ -31,7 +31,7 @@ class PostSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.name', read_only=True)
     
     class Meta:
-        models = Post
+        model = Post
         fields = [
             'id', 'author', 'category', 'category_name', 'title', 'content', 'status', 'created_at', 'updated_at',
         ]
@@ -43,6 +43,6 @@ class CommentSerializers(serializers.ModelSerializer):
     post_title = serializers.CharField(source='post.title', read_only=True)
     
     class Meta:
-        models = Comment
+        model = Comment
         fields = ['id', 'author', 'post', 'post_title', 'content', 'created_at']
         read_only_fields = ['id', 'author', 'created_at']

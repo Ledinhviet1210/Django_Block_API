@@ -85,7 +85,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         post = self.request.query_params.get('post')
         
         if post:
-            queryset = self.queryset.filter(post_id=post)
+            queryset = queryset.filter(post_id=post)
             
         return queryset
     
